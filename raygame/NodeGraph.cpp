@@ -63,11 +63,11 @@ DynamicArray<NodeGraph::Node*> NodeGraph::findPath(Node* start, Node* goal)
 		{
 			for (int i = 0; i < currentNode->edges.getLength(); i++)
 			{
-				if (!currentNode->edges[i].target->walkable)
-					continue;
-
 				NodeGraph::Node* targetNode = currentNode->edges[i].target;
 				targetNode->color = 0xFF0000FF;
+
+				if (!targetNode->walkable)
+					continue;
 
 				if (targetNode->gScore == 0 || targetNode->gScore > currentNode->gScore + currentNode->edges[i].cost)
 				{

@@ -4,6 +4,7 @@
 #include "raylib.h"
 #include "Transform2D.h"
 #include "PathfindComponent.h"
+#include "StateMachineComponent.h"
 #include "MoveComponent.h"
 #include "SpriteComponent.h"
 
