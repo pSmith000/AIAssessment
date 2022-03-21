@@ -52,7 +52,7 @@ void StateMachineComponent::update(float deltaTime)
 	case SEEK:
 		m_seekComponent->setSteeringForce(m_seekForce);
 		m_wanderComponent->setSteeringForce(0);
-		m_pathfindComponent->setEnabled(true);
+		m_pathfindComponent->setEnabled(false);
 
 		if (!targetInRange)
 			setCurrentState(WANDER);
