@@ -48,6 +48,8 @@ public:
 	/// <param name="target">The actor to use in pathfinding</param>
 	void setTarget(Actor* target) { m_target = target; }
 
+	void onEnabled() override { m_needPath = true; }
+
 	int getColor() { return m_color; }
 	void setColor(int color) { m_color = color; }
 
