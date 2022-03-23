@@ -15,5 +15,5 @@ Wall::Wall(float x, float y) : Actor(x, y, "Wall")
 void Wall::draw()
 {
 	Actor::draw();
-	DrawRectangle(getTransform()->getWorldPosition().x - Maze::TILE_SIZE / 2, getTransform()->getWorldPosition().y - Maze::TILE_SIZE / 2, Maze::TILE_SIZE, Maze::TILE_SIZE, BLUE);
+	DrawRectangle(getTransform()->getWorldPosition().x - Maze::TILE_SIZE / 2, getTransform()->getWorldPosition().y - Maze::TILE_SIZE / 2, Maze::TILE_SIZE, Maze::TILE_SIZE, SKYBLUE);
 }
