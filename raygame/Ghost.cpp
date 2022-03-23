@@ -11,6 +11,7 @@
 #include "SpriteComponent.h"
 #include "CircleCollider.h"
 #include "AABBCollider.h"
+#include "Player.h"
 
 Ghost::Ghost(float x, float y, float maxSpeed, float maxForce, int color, Maze* maze)
 	: Agent(x, y, "Ghost", maxSpeed, maxForce)

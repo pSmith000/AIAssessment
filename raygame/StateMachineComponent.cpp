@@ -17,7 +17,7 @@ void StateMachineComponent::start()
 
 	m_pathfindComponent = getOwner()->getComponent<PathfindComponent>();
 
-	m_currentState = PATHFIND;
+	m_currentState = SEEKINGWANDER;
 }
 
 void StateMachineComponent::update(float deltaTime)

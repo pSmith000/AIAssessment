@@ -52,5 +52,6 @@ void Player::onCollision(Actor* other)
 	if (Ghost* ghost = dynamic_cast<Ghost*>(other))
 	{
 		getTransform()->setWorldPostion({ 350, 700 });
+		other->getTransform()->setWorldPostion({ 350, 55 });
 	}
 }
