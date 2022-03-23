@@ -24,20 +24,20 @@ Maze::Maze()
 		{ w, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, w },
 		{ w, _, _, _, _, _, _, _, _, _, _, _, _, _, g, _, _, _, _, _, _, _, _, _, _, _, _, w },
 		{ w, _, _, _, _, _, _, _, _, _, _, w, w, w, w, w, w, _, _, _, _, _, _, _, _, _, _, w },
-		{ w, _, _, w, _, _, _, _, _, _, w, _, _, _, _, _, _, w, _, _, _, _, _, _, w, _, _, w },
-		{ w, _, w, w, w, _, _, _, _, w, _, _, _, _, _, _, _, _, w, _, _, _, _, w, w, w, _, w },
-		{ w, _, _, w, _, _, _, _, w, _, _, _, _, _, _, _, _, _, _, w, _, _, _, _, w, _, _, w },
+		{ w, _, w, w, w, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, w, w, w, _, w },
+		{ w, _, w, w, w, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, w, w, w, _, w },
+		{ w, _, w, w, w, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, w, w, w, _, w },
 		{ w, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, w },
 		{ w, _, _, _, _, _, _, _, _, _, _, w, _, _, _, _, w, _, _, _, _, _, _, _, _, _, _, w },
-		{ w, _, _, _, _, _, w, _, _, _, _, w, _, _, _, _, w, _, _, _, _, w, _, _, _, _, _, w },
 		{ w, _, _, _, _, w, w, w, _, _, _, w, _, _, _, _, w, _, _, _, w, w, w, _, _, _, _, w },
-		{ w, _, _, _, _, _, w, _, _, _, _, w, _, _, _, _, w, _, _, _, _, w, _, _, _, _, _, w },
-		{ w, _, _, w, _, _, _, _, _, _, _, w, _, _, _, _, w, _, _, _, _, _, _, _, w, _, _, w },
-		{ w, _, _, _, w, _, _, _, _, _, w, w, _, _, _, _, w, w, _, _, _, _, _, w, _, _, _, w },
-		{ w, _, _, _, _, w, _, _, _, _, _, _, w, _, _, w, _, _, _, _, _, _, w, _, _, _, _, w },
+		{ w, _, _, _, _, w, w, w, _, _, _, w, _, _, _, _, w, _, _, _, w, w, w, _, _, _, _, w },
+		{ w, _, _, _, _, w, w, w, _, _, _, w, _, _, _, _, w, _, _, _, w, w, w, _, _, _, _, w },
+		{ w, _, _, _, _, _, _, _, _, _, _, w, _, _, _, _, w, _, _, _, _, _, _, _, _, _, _, w },
+		{ w, _, _, _, _, _, _, _, _, _, w, w, _, _, _, _, w, w, _, _, _, _, _, _, _, _, _, w },
+		{ w, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, w },
 		{ w, _, _, _, _, _, w, _, w, _, _, _, _, _, _, _, _, _, _, w, _, w, _, _, _, _, _, w },
 		{ w, _, _, _, _, _, w, _, w, _, _, _, _, _, _, _, _, _, _, w, _, w, _, _, _, _, _, w },
-		{ w, _, _, _, _, _, w, _, w, _, _, _, w, _, _, w, _, _, _, w, _, w, _, _, _, _, _, w },
+		{ w, _, _, _, _, _, w, _, w, _, _, _, _, _, _, _, _, _, _, w, _, w, _, _, _, _, _, w },
 		{ w, _, _, _, _, _, w, _, w, w, w, w, _, _, _, _, w, w, w, w, _, w, _, _, _, _, _, w },
 		{ w, _, _, _, _, _, w, _, _, _, _, _, _, _, _, _, _, _, _, _, _, w, _, _, _, _, _, w },
 		{ w, _, _, _, _, _, w, w, w, w, w, w, _, _, _, _, w, w, w, w, w, w, _, _, _, _, _, w },
@@ -72,7 +72,7 @@ Maze::~Maze()
 
 void Maze::draw()
 {
-	//NodeGraph::drawGraph(m_grid[0][0].node);
+	NodeGraph::drawGraph(m_grid[0][0].node);
 	Scene::draw();
 }
 
@@ -116,12 +116,17 @@ Maze::Tile Maze::createTile(int x, int y, TileKey key)
 		break;
 	case TileKey::GHOST:
 		tile.cost = 1.0f;
+		//Creates the ghost and sets its target to be the player
 		Ghost* ghost = new Ghost(position.x, position.y, 100, 250, 0xFF6666FF, this);
 		ghost->setTarget(m_player);
+
+		//creates a seek component, sets the target, and adds it to the ghost
 		SeekComponent* seekComponent = new SeekComponent();
 		seekComponent->setSteeringForce(200);
 		seekComponent->setTarget(m_player);
 		ghost->addComponent(seekComponent);
+
+		//adds the statemachine component to the ghost
 		ghost->addComponent<StateMachineComponent>();
 		tile.actor = ghost;
 		addActor(tile.actor);

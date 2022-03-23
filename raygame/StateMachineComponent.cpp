@@ -39,7 +39,9 @@ void StateMachineComponent::update(float deltaTime)
 		m_pathfindComponent->setEnabled(true);
 
 		if (!targetInPathfindRange)
-			setCurrentState(SEEKINGWANDER);
+			setCurrentState(WANDER);
+		if (targetInRange)
+			setCurrentState(SEEK);
 
 		break;
 	case WANDER:
@@ -48,17 +50,18 @@ void StateMachineComponent::update(float deltaTime)
 		m_pathfindComponent->setEnabled(false);
 
 		if (targetInRange)
-			setCurrentState(SEEKINGWANDER);
+			setCurrentState(SEEK);
 		if (targetInPathfindRange)
 			setCurrentState(PATHFIND);
 
 		break;
 	case SEEK:
-		m_seekComponent->setSteeringForce(m_seekForce);
+		m_seekComponent->setSteeringForce(160);
 		m_wanderComponent->setSteeringForce(0);
+		m_pathfindComponent->setEnabled(false);
 
 		if (!targetInRange)
-			setCurrentState(WANDER);
+			setCurrentState(SEEKINGWANDER);
 
 		break;
 	case SEEKINGWANDER:
