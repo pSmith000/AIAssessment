@@ -44,53 +44,66 @@ void sortFScore(DynamicArray<NodeGraph::Node*>& nodes)
 
 DynamicArray<NodeGraph::Node*> NodeGraph::findPath(Node* start, Node* goal)
 {
+	//Reset the graph score to fix the drawing to the screen
 	resetGraphScore(start);
 	//Insert algorithm here
 	DynamicArray<NodeGraph::Node*> openSet = DynamicArray<NodeGraph::Node*>();
 	DynamicArray<NodeGraph::Node*> closedSet = DynamicArray<NodeGraph::Node*>();
 
+	//Sets the current node to be the starting node and adds it to the open list
 	Node* currentNode = start;
 	start->color = 0x00FF00FF;
 	openSet.addItem(start);
 
+	//While the open list has items in it
 	while (openSet.getLength() > 0)
 	{
+		//Sort the open list, set the current node to be the first item and remove it
 		sortFScore(openSet);
 		currentNode = openSet[0];
 		openSet.remove(currentNode);
 
 		if (!closedSet.contains(currentNode))
 		{
+			//Loop through all of the connected edges to the current node
 			for (int i = 0; i < currentNode->edges.getLength(); i++)
 			{
+				//Set the target node to be the edges target
 				NodeGraph::Node* targetNode = currentNode->edges[i].target;
 				targetNode->color = 0xFF0000FF;
 
+				//If the path is not possible continue
 				if (!targetNode->walkable)
 					continue;
 
+				//If the gscore is greater than 0 and more than the cost of a different path
 				if (targetNode->gScore == 0 || targetNode->gScore > currentNode->gScore + currentNode->edges[i].cost)
 				{
+					//reset the score to be the better path
 					targetNode->gScore = currentNode->gScore + currentNode->edges[i].cost;
 					targetNode->hScore = getManhattanDistance(targetNode, goal);
 					targetNode->fScore = targetNode->gScore + targetNode->hScore;
 					targetNode->previous = currentNode;
 				}
+				//if we have not looked at the target node in the open list
 				if (!openSet.contains(targetNode))
+					//add it to the open list
 					openSet.addItem(targetNode);
 			}
+			//After we are done add the item to the closed list
 			closedSet.addItem(currentNode);
 		}
+		//if the current node is the goal then return
 		if (currentNode == goal)
 			return reconstructPath(start, goal);
 	}
-
 
 	return reconstructPath(start, goal);
 }
 
 float NodeGraph::getManhattanDistance(Node* start, Node* end) 
 {
+	//returns the manhattan distance formula used to get the hscore of the node
 	return abs(start->position.x - end->position.x)
 		+ abs(start->position.y - end->position.y);
 }
