@@ -14,7 +14,7 @@ void StateMachineComponent::start()
 
 	m_wanderComponent = getOwner()->getComponent<WanderComponent>();
 	m_wanderForce = m_wanderComponent->getSteeringForce();
-
+	
 	m_pathfindComponent = getOwner()->getComponent<PathfindComponent>();
 
 	m_currentState = SEEKINGWANDER;

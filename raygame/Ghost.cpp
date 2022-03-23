@@ -17,7 +17,7 @@ Ghost::Ghost(float x, float y, float maxSpeed, float maxForce, int color, Maze* 
 	: Agent(x, y, "Ghost", maxSpeed, maxForce)
 {
 	m_maze = maze;
-	getTransform()->setScale({ Maze::TILE_SIZE,Maze::TILE_SIZE });
+	getTransform()->setScale({ Maze::TILE_SIZE ,Maze::TILE_SIZE });
 
 	m_pathfindComponent = new PathfindComponent(maze);
 	m_wanderComponent = new WanderComponent(1500, 200, 200);
