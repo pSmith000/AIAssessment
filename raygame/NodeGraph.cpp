@@ -44,7 +44,7 @@ void sortFScore(DynamicArray<NodeGraph::Node*>& nodes)
 
 DynamicArray<NodeGraph::Node*> NodeGraph::findPath(Node* start, Node* goal)
 {
-	//Reset the graph score to fix the drawing to the screen
+	//Reset the graph score to fix the drawing to the screen 
 	resetGraphScore(start);
 	//Insert algorithm here
 	DynamicArray<NodeGraph::Node*> openSet = DynamicArray<NodeGraph::Node*>();
