@@ -116,7 +116,7 @@ Maze::Tile Maze::createTile(int x, int y, TileKey key)
 		break;
 	case TileKey::GHOST:
 		tile.cost = 1.0f;
-		Ghost* ghost = new Ghost(position.x, position.y, 100, 150, 0xFF6666FF, this);
+		Ghost* ghost = new Ghost(position.x, position.y, 100, 250, 0xFF6666FF, this);
 		ghost->setTarget(m_player);
 		SeekComponent* seekComponent = new SeekComponent();
 		seekComponent->setSteeringForce(200);

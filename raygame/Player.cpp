@@ -8,7 +8,8 @@
 #include "AABBCollider.h"
 #include "Agent.h"
 #include "Collider.h"
-#include "InputComponent.h";
+#include "InputComponent.h"
+#include "Ghost.h"
 
 void Player::start()
 {
@@ -46,5 +47,10 @@ void Player::onCollision(Actor* other)
 		tilePosition = tilePosition - halfTile;
 		//getTransform()->setWorldPostion(getTransform()->getWorldPosition() - getMoveComponent()->getVelocity().getNormalized() * -.05f);
 		applyForce(getCollider()->getCollisionNormal() * -1 * getMoveComponent()->getVelocity().getMagnitude());
+	}
+
+	if (Ghost* ghost = dynamic_cast<Ghost*>(other))
+	{
+		getTransform()->setWorldPostion({ 350, 700 });
 	}
 }

@@ -7,7 +7,7 @@
 Wall::Wall(float x, float y) : Actor(x, y, "Wall")
 {
 	setStatic(true);
-	setCollider(new AABBCollider(Maze::TILE_SIZE / 2, Maze::TILE_SIZE / 2, this));
+	setCollider(new AABBCollider(Maze::TILE_SIZE / 2 - .05, Maze::TILE_SIZE / 2 - .05, this));
 	getTransform()->setScale({ Maze::TILE_SIZE / 2, Maze::TILE_SIZE / 2 }
 	);
 }
