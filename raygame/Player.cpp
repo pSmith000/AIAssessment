@@ -21,6 +21,7 @@ void Player::start()
 	setCollider(new AABBCollider(Maze::TILE_SIZE, Maze::TILE_SIZE, this));
 	//Set spawn point
 	//Set move speed
+	setMaxForce(200);
 	//Set position clamps
 }
 

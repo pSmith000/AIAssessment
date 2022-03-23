@@ -119,7 +119,7 @@ Maze::Tile Maze::createTile(int x, int y, TileKey key)
 		Ghost* ghost = new Ghost(position.x, position.y, 100, 150, 0xFF6666FF, this);
 		ghost->setTarget(m_player);
 		SeekComponent* seekComponent = new SeekComponent();
-		seekComponent->setSteeringForce(50);
+		seekComponent->setSteeringForce(200);
 		seekComponent->setTarget(m_player);
 		ghost->addComponent(seekComponent);
 		ghost->addComponent<StateMachineComponent>();
