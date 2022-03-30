@@ -48,6 +48,7 @@ DynamicArray<NodeGraph::Node*> NodeGraph::findPath(Node* start, Node* goal)
 	//Insert algorithm here
 	DynamicArray<NodeGraph::Node*> openSet = DynamicArray<NodeGraph::Node*>();
 	DynamicArray<NodeGraph::Node*> closedSet = DynamicArray<NodeGraph::Node*>();
+	float currentFScore;
 
 	Node* currentNode = start;
 	start->color = 0x00FF00FF;
@@ -57,35 +58,43 @@ DynamicArray<NodeGraph::Node*> NodeGraph::findPath(Node* start, Node* goal)
 	{
 		sortFScore(openSet);
 		currentNode = openSet[0];
-		openSet.remove(currentNode);
 
-		if (!closedSet.contains(currentNode))
-		{
-			for (int i = 0; i < currentNode->edges.getLength(); i++)
-			{
-				NodeGraph::Node* targetNode = currentNode->edges[i].target;
-				targetNode->color = 0xFF0000FF;
-
-				if (!targetNode->walkable)
-					continue;
-
-				if (targetNode->gScore == 0 || targetNode->gScore > currentNode->gScore + currentNode->edges[i].cost)
-				{
-					targetNode->gScore = currentNode->gScore + currentNode->edges[i].cost;
-					targetNode->hScore = getManhattanDistance(targetNode, goal);
-					targetNode->fScore = targetNode->gScore + targetNode->hScore;
-					targetNode->previous = currentNode;
-				}
-				if (!openSet.contains(targetNode))
-					openSet.addItem(targetNode);
-			}
-			closedSet.addItem(currentNode);
-		}
 		if (currentNode == goal)
 			return reconstructPath(start, goal);
+
+		openSet.remove(currentNode);
+		
+		for (int i = 0; i < currentNode->edges.getLength(); i++)
+		{
+			NodeGraph::Node* targetNode = currentNode->edges[i].target;
+			targetNode->color = 0xFF0000FF;
+
+			if (!targetNode->walkable)
+				continue;
+
+			if (!closedSet.contains(targetNode))
+			{
+				targetNode->gScore = currentNode->gScore + currentNode->edges[i].cost;
+				targetNode->hScore = getManhattanDistance(targetNode, goal);
+				currentFScore = targetNode->gScore + targetNode->hScore;
+			}
+			else
+				continue;
+
+			if (openSet.contains(targetNode) && targetNode->gScore == 0 || targetNode->gScore > currentNode->gScore + currentNode->edges[i].cost)
+			{
+				targetNode->fScore = currentFScore;
+				targetNode->previous = currentNode;
+			}
+			if (!openSet.contains(targetNode))
+			{
+				openSet.addItem(targetNode);
+				targetNode->fScore = currentFScore;
+				targetNode->previous = currentNode;
+			}
+		}
+		closedSet.addItem(currentNode);
 	}
-
-
 	return reconstructPath(start, goal);
 }
 
