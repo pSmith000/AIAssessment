@@ -49,8 +49,10 @@ void Player::onCollision(Actor* other)
 		applyForce(getCollider()->getCollisionNormal() * -1 * getMoveComponent()->getVelocity().getMagnitude());
 	}
 
+	//If the player collides with the ghost
 	if (Ghost* ghost = dynamic_cast<Ghost*>(other))
 	{
+		//reset both of their positions
 		getTransform()->setWorldPostion({ 350, 700 });
 		other->getTransform()->setWorldPostion({ 350, 55 });
 	}
